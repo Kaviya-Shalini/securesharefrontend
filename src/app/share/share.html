@@ -1,0 +1,48 @@
+  <div class="layout" [class.sidebar-closed]="isSidebarClosed">
+    <!-- Sidebar -->
+    <app-sidebar (sidebarToggle)="onSidebarToggle($event)"></app-sidebar>
+
+    <!-- Content -->
+    <div class="content">
+      <h1 class="page-title">Share File</h1>
+      <p class="quote">Securely share your file with others</p>
+
+      <div class="card">
+        <!-- File Info -->
+        <p *ngIf="fileId" class="file-info">
+          Sharing file with ID: <strong>{{ fileId }}</strong>
+        </p>
+
+        <!-- Username -->
+        <div class="field">
+          <label class="label">Enter Username</label>
+          <input
+            type="text"
+            [(ngModel)]="username"
+            placeholder="Enter username to share with" />
+        </div>
+
+        <!-- Sensitivity Options -->
+        <div class="field">
+          <label class="label">Select Data Sensitivity</label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" [(ngModel)]="sensitivity" value="sensitive" />
+              Sensitive Data
+            </label>
+            <label>
+              <input type="radio" [(ngModel)]="sensitivity" value="insensitive" />
+              Insensitive Data
+            </label>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button class="btn" (click)="shareFile()">Share File</button>
+
+        <!-- Messages -->
+        <p *ngIf="successMessage" class="success">{{ successMessage }}</p>
+        <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+      </div>
+    </div>
+  </div>

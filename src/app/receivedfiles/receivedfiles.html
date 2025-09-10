@@ -1,0 +1,50 @@
+ <div class="layout" [class.sidebar-closed]="isSidebarClosed">
+      <!-- Hamburger -->
+      <button class="hamburger" *ngIf="isSidebarClosed" (click)="toggleSidebar()">
+        <span></span><span></span><span></span>
+      </button>
+
+      <!-- Sidebar -->
+      <app-sidebar (sidebarToggle)="onSidebarToggle($event)"></app-sidebar>
+
+      <!-- Main Content -->
+      <div class="content">
+        <h1 class="page-title">Received Files</h1>
+        <p class="quote">"Here are the files you have received."</p>
+
+        <!-- Search + Filters -->
+        <div class="toolbar">
+          <input type="text" [(ngModel)]="searchQuery" (input)="searchFilesWithPagination()" placeholder="Search by sender name, filename or category..." />
+
+          <div class="filters">
+            <button [class.active]="filterType === 'all'" (click)="setFilter('all')">All</button>
+            <button [class.active]="filterType === 'sensitive'" (click)="setFilter('sensitive')">Sensitive</button>
+            <button [class.active]="filterType === 'insensitive'" (click)="setFilter('insensitive')">Insensitive</button>
+          </div>
+        </div>
+
+        <!-- Card Grid -->
+        <div class="card-grid">
+          <div
+            class="file-card"
+            *ngFor="let file of filteredFiles"
+            #cardEl
+          >
+            <h3>{{ file.filename }}</h3>
+            <p><strong>Sender:</strong> {{ file.senderName }}</p>
+            <p><strong>Receiver:</strong> {{ file.receiverName }}</p>
+            <p><strong>Category:</strong> {{ file.category }}</p>
+            <p><strong>Sensitivity:</strong>
+              <span [class.sensitive]="file.isSensitive" [class.insensitive]="!file.isSensitive">
+                {{ file.isSensitive ? 'Sensitive' : 'Insensitive' }}
+              </span>
+            </p>
+          </div>
+        </div>
+        <div class="pagination">
+          <button (click)="prevPage()" [disabled]="currentPage === 0">Prev</button>
+          <span>Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+          <button (click)="nextPage()" [disabled]="currentPage + 1 >= totalPages">Next</button>
+        </div>
+      </div>
+    </div>

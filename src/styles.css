@@ -1,1 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+:host ::ng-deep app-sidebar .sidebar {
+  background: #ffffff !important;  /* ✅ white background */
+  color: #111827 !important;       /* ✅ dark text */
+}
+h1{
+    font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+     
+        font-size: 2.5rem !important;
+        font-weight: 800 !important;
+        color: #293061ff !important;
+      
+}

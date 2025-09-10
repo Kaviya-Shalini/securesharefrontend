@@ -1,0 +1,77 @@
+ <div class="layout" [class.sidebar-closed]="isSidebarClosed">
+      <!-- Hamburger (only if sidebar is closed) -->
+      <button class="hamburger" *ngIf="isSidebarClosed" (click)="toggleSidebar()">
+        <span></span><span></span><span></span>
+      </button>
+
+      <!-- Sidebar -->
+      <app-sidebar (sidebarToggle)="onSidebarToggle($event)"></app-sidebar>
+
+      <!-- Main Content -->
+      <div class="content">
+        <h1 class="page-title">Dashboard</h1>
+        <p class="quote">"Overview of your uploads and stats"</p>
+
+        <div class="dashboard">
+
+          <!-- Row 1 -->
+          <div class="row">
+            <div class="card flex-2">
+              <h3>📈 Uploads Summary</h3>
+              <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="'line'"></canvas>
+            </div>
+            <div class="card flex-1">
+              <h3>📂 Category Distribution</h3>
+              <canvas baseChart [data]="doughnutChartData" [options]="doughnutChartOptions" [type]="'doughnut'"></canvas>
+              <div class="category-grid">
+                <div class="category-item" *ngFor="let cat of categoryStats; let i=index">
+                  <span class="category-color" [style.background]="chartColors[i]"></span>
+                  <span>{{cat.label}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 2 -->
+          <div class="row">
+            <div class="card flex-1">
+              <h3>📑 Recent Uploads</h3>
+              <table>
+                <thead>
+                  <tr><th>File</th><th>Category</th><th>Date</th></tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let file of recentUploads">
+                    <td>{{file.name}}</td>
+                    <td>{{file.category}}</td>
+                    <td>{{file.date}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="card flex-1">
+              <h3>📊 Uploads by Category</h3>
+              <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'bar'"></canvas>
+            </div>
+          </div>
+
+          <!-- Row 3 -->
+          <div class="row">
+            <div class="card flex-2">
+              <h3>🔵 Circular Stats</h3>
+              <div class="circle-row">
+                <div class="circle-card" *ngFor="let cat of categoryStats">
+                  <div class="circle">{{cat.value}}</div>
+                  <p>{{cat.label}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="card flex-1">
+              <h3>🔥 Most Uploaded Trend</h3>
+              <canvas baseChart [data]="miniLineChartData" [options]="miniLineChartOptions" [type]="'line'"></canvas>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
