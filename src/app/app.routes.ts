@@ -25,7 +25,7 @@ export const routes: Routes = [
   { path: 'sharedfiles', component: SharedFilesComponent },
   { path: 'share', component: Share },
 ];
-
+//Ngmodule to import and export the RouterModule
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
